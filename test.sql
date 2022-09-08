@@ -1,0 +1,12 @@
+DELETE from access ;
+DELETE from employes;
+DELETE from servies;
+DELETE from salaries;
+INSERT into access(email,nameFirst,nameLast,employe_id)values("thalt@gmail.com","thalt","tsek",1);
+INSERT into employes(email,nameFirst,nameLast,salary,salaries_id,servies_id,id)values("thalt@gmail.com","thalt","tsek",1000,1,1,1);
+INSERT into salaries(perYear,bonus,start_salary,date_hire,id)values(12000,1000,1000,date(),1);
+INSERT into servies(employe_id)VALUES(1);
+select * from access;
+select * from employes;
+select * from servies;
+select * from salaries;
