@@ -56,3 +56,8 @@ create table project(
     working_bool DEFAULT False,
     id INTEGER PRIMARY KEY AUTOINCREMENT
 );
+create table groupEmployes(
+    work_id int,
+    name varchar(255),
+    id INTEGER PRIMARY KEY AUTOINCREMENT
+)

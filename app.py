@@ -29,7 +29,6 @@ def post_access():
 def set_employe_post():
     form=dict(request.form)
     print(sqlCode.employe.set_employe(form["email"],form["nameFirst"],form["nameLast"]))
-    print("ok")
     return redirect("/home")
 
 @app.get("/link/home")
@@ -47,7 +46,6 @@ def set_employe_get():
 def page_employes():
     page = int(request.args["page"]) if "page" in request.args else 0
     data=sqlCode.employe.get_ten_employes(page*10)
-    print(data)
     return render_template("see_employes.html",data=data[0],lenOfPage= data[1]//10 if data[1]/10==data[1]//10 else data[1]//10+1,position=page)
 app.run()
 
