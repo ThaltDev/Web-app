@@ -21,7 +21,7 @@ class sqlCode():
             fine2=0
             try:
                 cursor = connection.cursor()
-                employesList=cursor.execute(f"select id,nameFirst,nameLast from employes limit 10 offset {position_start}").fetchall()
+                employesList=cursor.execute(f"select id,FirstName,LastName from employes limit 10 offset {position_start}").fetchall()
                 fine2=cursor.execute(f"select count(*) from employes").fetchone()[0]
             except:
                 pass
@@ -31,30 +31,33 @@ class sqlCode():
             return [employesList,fine2]
         def get_employe_by_id(id):
             employeInfo=[]
+            more=[]
             connection = sql.connect(name,check_same_thread=False)
             try:
                 cursor = connection.cursor()
-                employeInfo=cursor.execute(f"select * from employes where id={id}").fetchone()
+                employeInfo=cursor.execute(f"select id,email,FirstName,LastName from employes where id={id}").fetchall()
+                connection.commit()
+                more=cursor.execute(f"select perYear from salary where id=(select salary_id from bank where employe_id={id})").fetchall()
             except:
                 pass
             connection.commit()
             cursor.close()
             connection.close()
-            return employeInfo
+            return {"basic":employeInfo,"excar":more}
         def set_employe(email,nameFirst,nameLast):
             connection = sql.connect(name,check_same_thread=False)
             try:
                 cursor = connection.cursor()
-                id = cursor.execute(f"select max(id) from salaries;").fetchone()[0]+1
+                id = cursor.execute(f"select max(id) from bank;").fetchone()[0]+1
                 connection.commit()
 
                 id_2= cursor.execute(f"select max(id) from servies;").fetchone()[0]+1
                 connection.commit()
 
-                cursor.execute(f"insert into employes(email,nameFirst,nameLast,salaries_id,servies_id)values('{email}','{nameFirst}','{nameLast}',{id},{id_2})")
+                cursor.execute(f"insert into employes(email,nameFirst,nameLast,bank_id,servies_id)values('{email}','{nameFirst}','{nameLast}',{id},{id_2})")
                 connection.commit()
 
-                cursor.execute(f"insert into salaries(date_hire,id)values(date(),{id})")            
+                cursor.execute(f"insert into bank(date_hire,id)values(date(),{id})")            
                 connection.commit()
 
                 cursor.execute(f"insert into servies(employe_id,id)values((select id from employes where email='{email}'),{id_2})")            
@@ -66,13 +69,45 @@ class sqlCode():
             connection.commit()
             cursor.close()
             connection.close()
+        def update_salary(employ_id,salary):
+            connection = sql.connect(name,check_same_thread=False)
+            update_fine=False
+            if 1:
+                cursor = connection.cursor()
+                salary_id=cursor.execute(f"select salary_id from bank where id=(select bank_id from employes where id={employ_id});").fetchone()[0]
+                connection.commit()
+                if cursor.execute(f"select max(id) from salary;").fetchone()[0]!=None:
+                    id_max= cursor.execute(f"select max(id) from salary;").fetchone()[0]+1
+                else:
+                    id_max=1
+                connection.commit()
+
+                cursor.execute(f"update bank set salary_id={id_max} where id=(select bank_id from employes where id={employ_id}); ")
+                connection.commit()
+                if salary_id==None:
+                    cursor.execute(f"insert into salary(perYear,id)values({salary},{id_max});")
+                    connection.commit()
+                else: #i think it better write update and the previous line get out of if and next line is update previous_salary_id 
+                    cursor.execute(f"insert into salary(perYear,previous_salary_id,id)values({salary},{salary_id},{id_max});")
+                    connection.commit()                    
+
+                update_fine=True
+
+            """except:
+                print("error")
+                pass"""
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return update_fine
 class promition():
     def access(email):
         connection = sql.connect(name,check_same_thread=False)
         try:
             cursor = connection.cursor()
-            acces=cursor.execute(f"select employe_id from access where email='{email}'").fetchall()[0]
+            acces=cursor.execute(f"select employe_id from access where employe_id=(select employe_id from employes where email='{email}');").fetchall()[0]
         except:
+            print("problem")
             acces=False
         connection.commit()
         cursor.close()
