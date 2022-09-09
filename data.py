@@ -71,7 +71,7 @@ class promition():
         connection = sql.connect(name,check_same_thread=False)
         try:
             cursor = connection.cursor()
-            acces=cursor.execute(f"select nameFirst,nameLast,employe_id from access where email='{email}'").fetchall()[0]
+            acces=cursor.execute(f"select employe_id from access where email='{email}'").fetchall()[0]
         except:
             acces=False
         connection.commit()
@@ -83,7 +83,7 @@ class promition():
         fine=False
         try:
             cursor = connection.cursor()
-            fine=cursor.execute(f"insert into access(email,nameFirst,nameLast,employe_id)values({email},{nameFirst},{nameLast},select email from employes where '{email}'=email);").fetchall()
+            fine=cursor.execute(f"insert into access(employe_id)values(select id from employes where '{email}'=email and'{nameFirst}'=FirstName and '{nameLast}'=LastName);").fetchall()
         except:
             pass
         connection.commit()

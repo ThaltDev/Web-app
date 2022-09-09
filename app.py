@@ -20,8 +20,8 @@ def post_access():
     data=promition.access(form["email"])
     if data:
         hashs=str(hash(str(time.time())+form["email"]))
-        linksCodes.update({hashs:data[2]})
-        email.sent.assec(form["email"],f"{request.url_root}link/home?code={hashs}&id={data[2]}")
+        linksCodes.update({hashs:data[0]})
+        email.sent.assec(form["email"],f"{request.url_root}link/home?code={hashs}&id={data[0]}")
         return "we sent you this email please check your email if you cann't see check and spam"
     return redirect("/home")
 
