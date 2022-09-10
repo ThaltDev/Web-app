@@ -24,7 +24,7 @@ def post_access():
     data=promition.access(form["email"])
     if data:
         hashs=str(hash(str(time.time())+form["email"]))
-        linksCodes.update({hashs:data[0]})
+        linksCodes.update({hashs:str(data[0])})
         email.sent.assec(form["email"],f"{request.url_root}link/home?code={hashs}&id={data[0]}")
         return "we sent you this email please check your email if you cann't see check and spam"
     return redirect("/home")
@@ -32,7 +32,6 @@ def post_access():
 @app.post("/post/set_employe")
 def set_employe_post():
     form=dict(request.form)
-    print(sqlCode.employe.set_employe(form["email"],form["nameFirst"],form["nameLast"]))
     return redirect("/home")
 
 @app.get("/link/home")
@@ -42,8 +41,8 @@ def LinkHome():
         if args["code"] in linksCodes and str(linksCodes[args["code"]])==str(args["id"]):
             session.pop('code',None)
             session.pop('id',None)
-            session['code'] = args["code"]
-            session['id'] = args["id"]
+            session['code'] = str(args["code"])
+            session['id'] = str(args["id"])
             return "asd"
     
     return redirect("/home")
