@@ -37,7 +37,7 @@ class sqlCode():
                 cursor = connection.cursor()
                 employeInfo=cursor.execute(f"select id,email,FirstName,LastName from employes where id={id}").fetchall()
                 connection.commit()
-                more=cursor.execute(f"select perYear from salary where id=(select salary_id from bank where employe_id={id})").fetchall()
+                more=cursor.execute(f"select f.bonus,f.date_hire,f.fire_bool,(select d.perYear from salary as d where d.id=(select e.salary_id from bank as e where e.employe_id={id})) from bank as f where f.employe_id={id}").fetchall()
             except:
                 pass
             connection.commit()

@@ -26,7 +26,7 @@ create table bank(
     bonus int DEFAULT 0,
     salary_id int,
     date_hire date,
-    fire_bool BOOLEAN DEFAULT False,
+    fire_bool date DEFAULT null,
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     employe_id int
 );

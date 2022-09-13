@@ -15,9 +15,6 @@ def sent_mail():
     return render_template("acces.html")
 
 linksCodes={"0":"0"}#codes:person
-@app.get("/test")
-def test(access1=False):
-    return f"<h1>{access1}</h1>"
 @app.post("/post/access")
 def post_access():
     form=dict(request.form)
@@ -74,6 +71,15 @@ def get_person(id):
     else:
         return make_response("you haven't take access to do this",404)
 
-app.run()
+#i will append a print command when i run the procket to remder what i have done
+if "see":
+    print("http://localhost:5000/home for see if you have acces-login")
+    print("http://localhost:5000/get_access for input your email can if you can get access with take a email with a link")
+    print("http://localhost:5000/link/home is from the email you sent you")
+    print("http://localhost:5000/set_employe for set a new employe you doesn't need to have acces")
+    print("http://localhost:5000/see_employes for see employes can get args to see 10 specif employes from a page?=1 you get first 10 employes")
+    print("http://localhost:5000/update_salary is for update salary from employe this need to have access")
+    print("http://localhost:5000/info/person/<id> is for get info for employe but if you have accees")
+app.run(port=5000)
 
 
