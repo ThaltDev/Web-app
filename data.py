@@ -100,6 +100,57 @@ class sqlCode():
             cursor.close()
             connection.close()
             return update_fine
+    class costumers():
+        def howmanyUsersUsedNowServies():
+            connection = sql.connect(name,check_same_thread=False)
+            count=0
+            try:
+                cursor = connection.cursor()
+                count=cursor.execute(f"select count(servies_help_now) from costumer").fetchone()
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return count
+        def howmanyUsedThisApp():
+            connection = sql.connect(name,check_same_thread=False)
+            count=0
+            try:
+                cursor = connection.cursor()
+                count=cursor.execute(f"select count(time_used_app) from costumer").fetchone()
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return count
+        def count():
+            connection = sql.connect(name,check_same_thread=False)
+            count=0
+            try:
+                cursor = connection.cursor()
+                count=cursor.execute(f"select count(*) from costumer").fetchone()
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return count
+        def get_ten_costumers(position_start):
+            employesList=[]
+            connection = sql.connect(name,check_same_thread=False)
+            fine2=0
+            try:
+                cursor = connection.cursor()
+                employesList=cursor.execute(f"select id,name from customer limit 10 offset {position_start}").fetchall()
+                fine2=cursor.execute(f"select count(*) from customer").fetchone()[0]
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return [employesList,fine2]
 class promition():
     def access(email):
         connection = sql.connect(name,check_same_thread=False)

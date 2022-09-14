@@ -70,7 +70,11 @@ def get_person(id):
         return render_template("person.html",info=sqlCode.employe.get_employe_by_id(id))
     else:
         return make_response("you haven't take access to do this",404)
-
+@app.get("/costumers")
+def costumers():
+    page = int(request.args["page"]) if "page" in request.args else 0
+    data=sqlCode.costumers.get_ten_costumers(page*10)
+    return render_template("costumers.html",data=data[0],lenOfPage= data[1]//10 if data[1]/10==data[1]//10 else data[1]//10+1,position=page)
 #i will append a print command when i run the procket to remder what i have done
 if "see":
     print("http://localhost:5000/home for see if you have acces-login")
@@ -80,6 +84,7 @@ if "see":
     print("http://localhost:5000/see_employes for see employes can get args to see 10 specif employes from a page?=1 you get first 10 employes")
     print("http://localhost:5000/update_salary is for update salary from employe this need to have access")
     print("http://localhost:5000/info/person/<id> is for get info for employe but if you have accees")
+    print("http://localhost:5000/costumers for see costumers like employe")
 app.run(port=5000)
 
 
