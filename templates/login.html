@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>log in</title>
+</head>
+<body>
+    {% if message %}
+    <div style="position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0%);
+    background-color:#2A4F87;
+    border: 7px solid black;
+    padding: 10px;
+    border-radius: 10px;" >
+    <img class="img-fluid" src="https://www.iconpacks.net/icons/1/free-icon-error-905.png" alt="Error icon" width="90" height="90" style="float:left;">
+    <h1 style="float:left;">{{message}}</h1>
+    </div>
+    {% endif %}
+    <form method="post" action="/login">
+        <label>Email</label><input name="email" >
+        <label>Name</label><input name="name" >
+        <label>Password</label><input type="password" name="password" >
+        <button type="submit" value="Submit">Submit</button> 
+    </form>
+    <a href='/signup'>create now new accont</a>
+    
+</body>
+</html>

@@ -137,7 +137,7 @@ class sqlCode():
             cursor.close()
             connection.close()
             return count
-        def get_ten_costumers(position_start):
+        def get_ten_customers(position_start):
             employesList=[]
             connection = sql.connect(name,check_same_thread=False)
             fine2=0
@@ -151,6 +151,72 @@ class sqlCode():
             cursor.close()
             connection.close()
             return [employesList,fine2]
+        def login(email,Username,password):
+            connection = sql.connect(name,check_same_thread=False)
+            check=f"name='{Username}'"
+            login=False#can't login because set wrong password
+            if email!="":
+                check = f"email='{email}'"
+            if 1:
+                cursor = connection.cursor()
+                id=cursor.execute(f"select id from customer where {check};").fetchone()
+                if id!=None:
+                    login=cursor.execute(f"select password from customer where id={id[0]};").fetchone()[0]==password#if exist this customer and can login
+                else:
+                    login=None#if doesn't exist this customer 
+            else:
+                print("error")
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return login 
+        def singup(email,Username,password):
+            connection = sql.connect(name,check_same_thread=False)
+            signup=False
+            try:
+                cursor = connection.cursor()
+                signup=not not cursor.execute(f"INSERT into customer(email,name,password)Values('{email}','{Username}','{password}')")
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return signup 
+        def getNameByEmail(email):
+            connection = sql.connect(name,check_same_thread=False)
+            username=False
+            try:
+                cursor = connection.cursor()
+                username=cursor.execute(f"select name from customer where email='{email}';")
+            except:
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return username 
+        def getPrievityCode(code):
+            return hash_server(code)
+        def check(username,randomNumber,password,AssCode):
+            connection = sql.connect(name,check_same_thread=False)
+            checkBool=False
+            try:
+                cursor = connection.cursor()
+                passwordTake=cursor.execute(f"select password from customer where name='{username}';").fetchone()
+                if passwordTake==None:
+                    return False
+                passwordTake=passwordTake[0]
+                hashPassword =hash_server(passwordTake)
+                if password!=hashPassword:
+                    return False
+                return AssCode==hash_server(hashPassword+randomNumber)
+            except:
+                print("new are")
+                pass
+            connection.commit()
+            cursor.close()
+            connection.close()
+            return checkBool 
 class promition():
     def access(email):
         connection = sql.connect(name,check_same_thread=False)

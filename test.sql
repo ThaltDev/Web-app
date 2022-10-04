@@ -6,6 +6,7 @@ INSERT into access(employe_id)values(1);
 INSERT into employes(email,FirstName,LastName,bank_id,servies_id,id)values("thalt.development@gmail.com","thalt","tsek",1,1,1);
 INSERT into bank(salary_id,bonus,date_hire,id,employe_id)values(1,0,date(),1,1);
 INSERT into servies(employe_id)VALUES(1);
+INSERT into customer(name,password)VALUES('firstCustomer','password123');
 select * from access;
 select * from employes;
 select * from servies;

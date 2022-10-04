@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Info page</title>
+    <link rel="stylesheet" href="/static/style/style.css">
+</head>
+<body>
+    
+    <h1 onclick='document.getElementById("employesLinks").style.display=document.getElementById("employesLinks").style.display==""? "None": ""'>employe</h1>
+    <div class="links_table" id="employesLinks" style="display: none;">
+        <a href="/see_employes">see employes</a>
+        <a href="/set_employe">set a new employe</a>
+        <a href="/set_employe">set employe</a>
+        <a href="/update_salary">update salary in some one employe</a>
+        <a href="/into/person">see a spefic employ by id</a>
+    </div>
+
+    <h1 onclick='document.getElementById("customersLinks").style.display=document.getElementById("employesLinks").style.display==""? "None": ""'>customers</h1>
+    <div class="links_table" id="customersLinks"style="display: none;">
+        <a href="/customers">see customers</a>
+        <a href="/login">log in customer</a>
+        <a href="/signup">sign up customer</a>
+    </div>
+</body>
+</html>

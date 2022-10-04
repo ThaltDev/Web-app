@@ -26,7 +26,7 @@ create table bank(
     bonus int DEFAULT 0,
     salary_id int,
     date_hire date,
-    fire_bool date DEFAULT null,
+    fire_date date DEFAULT null,
     id INTEGER PRIMARY KEY AUTOINCREMENT,
     employe_id int
 );
@@ -45,6 +45,7 @@ create table customer(
     time_used_app int DEFAULT 0,
     email varchar(255) DEFAULT "",
     name varchar(255),
+    password varchar(255) not null,
     servies_help_now Default null,
     id INTEGER PRIMARY KEY AUTOINCREMENT
 );
